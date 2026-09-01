@@ -1,0 +1,36 @@
+name: Tuesday League Recap
+
+on:
+  schedule:
+    - cron: '0 13 * * 2' # Tuesdays at 9:00 AM EDT (13:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  tuesday-recap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Send Final Scores & Trophies
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          LEAGUE_ID: ${{ secrets.LEAGUE_ID }}
+          LEAGUE_YEAR: '2026'
+          YEAR: '2026'
+          ESPN_S2: ${{ secrets.ESPN_S2 }}
+          SWID: ${{ secrets.SWID }}
+        run: python gamedaybot/espn/espn_bot.py get_final
+      - name: Send Power Rankings
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          LEAGUE_ID: ${{ secrets.LEAGUE_ID }}
+          LEAGUE_YEAR: '2026'
+          YEAR: '2026'
+          ESPN_S2: ${{ secrets.ESPN_S2 }}
+          SWID: ${{ secrets.SWID }}
+        run: python gamedaybot/espn/espn_bot.py get_power_rankings
