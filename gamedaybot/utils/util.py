@@ -23,8 +23,6 @@ def str_to_bool(check: str) -> bool:
         return False
 
 
-
-
 def str_limit_check(text: str, limit: int) -> List[str]:
     """
     Splits a string into parts of a maximum length.
@@ -159,3 +157,67 @@ def currently_in_season(season_start_date=None, season_end_date=None, current_da
     season_end_date = str_to_datetime(season_end_date)
 
     return season_start_date <= current_date <= season_end_date
+
+
+def ansi_format(text: str, color: str = "green", bold: bool = False) -> str:
+    """
+    Wraps text in Discord ANSI color escape sequences inside code blocks.
+
+    Parameters
+    ----------
+    text : str
+        The text to format.
+    color : str, optional
+        Color option ('gray', 'red', 'green', 'yellow', 'blue', 'pink', 'cyan', 'white'), by default "green".
+    bold : bool, optional
+        Whether to bold the text, by default False.
+
+    Returns
+    -------
+    str
+        The ANSI-formatted code block string.
+    """
+    color_codes = {
+        "gray": "30",
+        "red": "31",
+        "green": "32",
+        "yellow": "33",
+        "blue": "34",
+        "pink": "35",
+        "cyan": "36",
+        "white": "37"
+    }
+
+    code = color_codes.get(color.lower(), "37")
+    weight = "1" if bold else "0"
+
+    return f"```ansi\n\u001b[{weight};{code}m{text}\u001b[0m\n```"
+
+
+def unicode_font(text: str, style: str = "small_caps") -> str:
+    """
+    Translates standard alphanumeric text into stylized Unicode font characters.
+
+    Parameters
+    ----------
+    text : str
+        The string to transform.
+    style : str, optional
+        Style option ('small_caps', 'outline', 'bold'), by default "small_caps".
+
+    Returns
+    -------
+    str
+        The translated string in custom Unicode character style.
+    """
+    normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+    styles = {
+        "small_caps": "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789",
+        "outline": "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡",
+        "bold": "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽q𝗿𝘀𝘁𝘂𝘃 visual𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵"
+    }
+
+    target = styles.get(style, styles["small_caps"])
+    trans_table = str.maketrans(normal, target)
+    return text.translate(trans_table)
