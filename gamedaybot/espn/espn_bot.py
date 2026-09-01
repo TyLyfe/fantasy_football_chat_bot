@@ -40,46 +40,6 @@ def espn_bot(function):
     Returns
     -------
     None
-
-    Notes
-    -----
-    The function uses the following information from the data dictionary:
-
-    str_limit: the character limit for messages on slack.
-    bot_id: the id of the GroupMe bot.
-        If not provided, defaults to 1.
-    slack_webhook_url: the webhook url for the slack bot.
-        If not provided, defaults to 1.
-    discord_webhook_url: the webhook url for the discord bot.
-        If not provided, defaults to 1.
-    league_id: the id of the fantasy football league.
-    year: the year of the league.
-        If not provided, defaults to current year.
-    swid: the swid of the league.
-        If not provided, defaults to '{1}'.
-    espn_s2: the espn s2 of the league.
-        If not provided, defaults to '1'.
-    top_half_scoring: a boolean that indicates whether to include only the top half of the league in the standings.
-        If not provided, defaults to False.
-    random_phrase: a boolean that indicates whether to include a random phrase in the message.
-        If not provided, defaults to False.
-
-    The function creates GroupMe, Slack, and Discord objects, and a League object using the provided information.
-    It then uses the specified function to generate a message and sends it through the appropriate messaging platform.
-
-    Possible function values:
-
-    get_matchups: sends the current week's matchups and the projected scores for the remaining games.
-    get_monitor: sends a message with a summary of the current week's scores.
-    get_scoreboard_short: sends a short version of the current week's scores.
-    get_projected_scoreboard: sends the projected scores for the remaining games.
-    get_close_scores: sends a message with the scores of games that have a difference of less than 7 points.
-    get_power_rankings: sends a message with the power rankings for the league.
-    get_trophies: sends a message with the trophies for the league.
-    get_standings: sends a message with the standings for the league.
-    get_final: sends the final scores and trophies for the previous week.
-    get_waiver_report: sends a message with the waiver report for the league.
-    init: sends a message to confirm that the bot has been set up.
     """
 
     data = get_env_vars()
@@ -216,7 +176,10 @@ def espn_bot(function):
         for message in messages:
             groupme_bot.send_message(message)
             slack_bot.send_message(message)
-            discord_bot.send_message(message)
+            
+            # Prepend styled Small-Caps header to clean Discord message
+            header = "🏆 **" + util.unicode_font("SPOC LEAGUE WIRE", style="small_caps") + "** 🏆\n\n"
+            discord_bot.send_message(header + message)
 
 
 if __name__ == '__main__':
