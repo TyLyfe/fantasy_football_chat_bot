@@ -21,8 +21,8 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           LEAGUE_ID: ${{ secrets.LEAGUE_ID }}
           LEAGUE_YEAR: ${{ secrets.LEAGUE_YEAR }}
-          START_DATE: '2026-09-01'
-          END_DATE: '2027-01-15'
+          START_DATE: '2026-08-31'
+          END_DATE: '2027-02-15'
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           SWID: ${{ secrets.SWID }}
         run: python gamedaybot/espn/espn_bot.py
