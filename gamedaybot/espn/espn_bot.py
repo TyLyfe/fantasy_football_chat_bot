@@ -216,7 +216,10 @@ def espn_bot(function):
         for message in messages:
             groupme_bot.send_message(message)
             slack_bot.send_message(message)
-            discord_bot.send_message(message)
+            
+            # Formats Discord output as an ANSI green code block
+            discord_msg = util.ansi_format(message, color="green")
+            discord_bot.send_message(discord_msg)
 
 
 if __name__ == '__main__':
