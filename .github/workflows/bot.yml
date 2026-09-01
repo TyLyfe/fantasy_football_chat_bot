@@ -25,4 +25,4 @@ jobs:
           END_DATE: '2027-02-15'
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           SWID: ${{ secrets.SWID }}
-        run: python gamedaybot/espn/espn_bot.py
+        run: python gamedaybot/espn/espn_bot.py init
