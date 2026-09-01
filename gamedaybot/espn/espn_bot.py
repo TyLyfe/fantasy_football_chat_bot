@@ -220,7 +220,7 @@ def espn_bot(function):
 
 
 if __name__ == '__main__':
-    from gamedaybot.espn.scheduler import scheduler
-
-    espn_bot("init")
-    scheduler()
+    import sys
+    # Pulls the action function from command-line arguments (defaults to 'init')
+    func = sys.argv[1] if len(sys.argv) > 1 else "init"
+    espn_bot(func)
