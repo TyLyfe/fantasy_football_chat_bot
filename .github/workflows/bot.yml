@@ -25,5 +25,4 @@ jobs:
           END_DATE: '2027-02-15'
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           SWID: ${{ secrets.SWID }}
-          INIT_MSG: "SPOC News Bot is alive and connected!"
         run: python gamedaybot/espn/espn_bot.py init
